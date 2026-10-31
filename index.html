@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Minesweeper: 3D Puzzle — Think Beyond the Surface</title>
+<meta name="description" content="Minesweeper: 3D Puzzle takes the classic game off the flat grid and wraps it around a cube. Rotate it, open its inner layers, and clear every safe cell across six worlds.">
+<link rel="canonical" href="https://cuneytdev.github.io/cubesweeper/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Minesweeper: 3D Puzzle">
+<meta property="og:title" content="Minesweeper: 3D Puzzle — Think Beyond the Surface">
+<meta property="og:description" content="Minesweeper, reimagined in 3D. Rotate the cube, explore its inner layers, and find every mine hiding inside.">
+<meta property="og:url" content="https://cuneytdev.github.io/cubesweeper/">
+<meta property="og:image" content="https://cuneytdev.github.io/cubesweeper/assets/images/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#101D30">
+
+<link rel="icon" href="assets/images/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+<link rel="stylesheet" href="assets/css/styles.css">
+
+<script>
+  /* Set before the first paint, so revealed sections never flash in and then hide. Anyone who prefers
+     reduced motion never gets the class, which leaves every section visible from the start. */
+  if (!window.matchMedia || !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Minesweeper: 3D Puzzle",
+  "alternateName": "CubeSweeper",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "iOS",
+  "url": "https://cuneytdev.github.io/cubesweeper/",
+  "description": "Minesweeper played on a cube. Rotate the board, open its inner layers, and clear every safe cell across six visual worlds."
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="mark" aria-hidden="true"></span>CubeSweeper</a>
+
+    <button class="nav-toggle" type="button" aria-expanded="true" aria-controls="site-nav" hidden>Menu</button>
+
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="./" aria-current="page">Home</a></li>
+        <li><a href="support/">Support</a></li>
+        <li><a href="privacy/">Privacy</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ---------- 1. hero ---------- -->
+  <section class="lp-hero center" aria-labelledby="hero-title">
+    <div class="orbs" aria-hidden="true">
+      <span class="orb orb-1"></span>
+      <span class="orb orb-2"></span>
+      <span class="orb orb-3"></span>
+      <span class="shape shape-1"></span>
+      <span class="shape shape-2"></span>
+      <span class="shape shape-3"></span>
+    </div>
+
+    <div class="wrap">
+      <p class="eyebrow">Think beyond the surface</p>
+
+      <h1 id="hero-title">MINESWEEPER.<br><span class="sheen">REIMAGINED IN 3D.</span></h1>
+
+      <p class="lede">Rotate, explore, and solve puzzles in a whole new dimension.</p>
+
+      <div class="actions">
+        <a class="btn btn-primary btn-store" data-appstore href="#" hidden>
+          <svg class="glyph-apple" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          Download on the App Store
+        </a>
+        <span class="btn btn-store btn-soon" data-appstore-soon>Coming soon to the App Store</span>
+
+        <a class="btn btn-ghost" href="#how">See how it plays</a>
+      </div>
+
+      <!-- The LCP image: loaded eagerly and given priority, with width/height set so nothing shifts. -->
+      <div class="phone phone-lg">
+        <img src="assets/images/shots/hero-classic.webp" width="1080" height="2347"
+             fetchpriority="high" decoding="async"
+             alt="A 6x6x6 Minesweeper cube floating over a deep navy background, its front face revealed to show numbered cells.">
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 2. how it works ---------- -->
+  <section id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="center reveal">
+        <h2 id="how-title">THINK IN THREE DIMENSIONS</h2>
+        <p class="lede">The rules you already know, on a board you have to turn over in your hands. On a flat grid a
+          cell touches up to 8 neighbours. Here it touches up to 26 — so the numbers run higher, and they mean more.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step-card reveal">
+          <span class="num" aria-hidden="true">1</span>
+          <div>
+            <h3>Rotate the cube</h3>
+            <p>Drag to spin the board and look at it from any angle. A clue that makes no sense from the front
+              often resolves the moment you see the side.</p>
+          </div>
+        </article>
+
+        <article class="step-card reveal" style="--d:70ms">
+          <span class="num" aria-hidden="true">2</span>
+          <div>
+            <h3>Reveal hidden cells</h3>
+            <p>Tap a cell to open it. Safe ground clears outward on its own, exactly like the game you grew up with.</p>
+          </div>
+        </article>
+
+        <article class="step-card reveal" style="--d:140ms">
+          <span class="num" aria-hidden="true">3</span>
+          <div>
+            <h3>Analyse the clues</h3>
+            <p>Each number counts the mines in all 26 cells around it — above, below, behind and diagonally
+              through the cube.</p>
+          </div>
+        </article>
+
+        <article class="step-card reveal">
+          <span class="num" aria-hidden="true">4</span>
+          <div>
+            <h3>Mark the mines</h3>
+            <p>Flag the cells you have worked out, so the board keeps your reasoning while you go and solve the
+              other side.</p>
+          </div>
+        </article>
+
+        <article class="step-card reveal" style="--d:70ms">
+          <span class="num" aria-hidden="true">5</span>
+          <div>
+            <h3>Explore internal layers</h3>
+            <p>Pull the cube apart and look at the cells buried in the middle, then put it back together and keep
+              going.</p>
+          </div>
+        </article>
+
+        <article class="step-card reveal" style="--d:140ms">
+          <span class="num" aria-hidden="true">6</span>
+          <div>
+            <h3>Clear every safe cell</h3>
+            <p>The cube is solved when nothing safe is left hidden. Lives give you room to be wrong while you
+              learn to see in three dimensions.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 3. layer exploration ---------- -->
+  <section id="layers" aria-labelledby="layers-title">
+    <div class="wrap">
+      <div class="split">
+        <div class="reveal">
+          <h2 id="layers-title">GO BEYOND THE SURFACE</h2>
+          <p class="lede">A flat minesweeper has edges. A cube has an inside.</p>
+          <p class="lede">Most of this board is not on a face at all — it is buried in the middle, out of sight
+            until you go looking. Open the layer view and the cube separates into slices you can read one at a
+            time, so the cells nobody can see from outside stop being guesswork and start being solvable.</p>
+          <p class="lede">It is the one thing a flat grid cannot do, and on the larger cubes it is where most of
+            the puzzle actually lives.</p>
+        </div>
+
+        <div class="reveal" style="--d:90ms">
+          <img class="shot" src="assets/images/shots/layers-exploded.webp" width="1080" height="2347"
+               loading="lazy" decoding="async"
+               alt="The cube separated into five horizontal layers floating apart, revealing numbered cells hidden inside.">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 4. six worlds ---------- -->
+  <section id="worlds" aria-labelledby="worlds-title">
+    <div class="wrap">
+      <div class="center reveal">
+        <h2 id="worlds-title">SIX WORLDS.<br>ONE CHALLENGE.</h2>
+        <p class="lede">Same rules, six completely different places to think in. Each world starts dormant and
+          comes back to life as you clear the board.</p>
+      </div>
+
+      <div class="themes">
+        <article class="theme reveal" style="--g1:#1c3a66; --g2:#0d1b33">
+          <img src="assets/images/shots/theme-classic.webp" width="720" height="1565" loading="lazy" decoding="async"
+               alt="The Classic world: a pale cube on deep navy, numbered cells on the open face.">
+          <span class="n">World 01</span>
+          <h3>Classic — The Origin</h3>
+          <p>Where it began. Clean cells on deep navy, nothing between you and the logic.</p>
+        </article>
+
+        <article class="theme reveal" style="--g1:#5a3a22; --g2:#2b1b11; --d:70ms">
+          <img src="assets/images/shots/theme-wood.webp" width="720" height="1565" loading="lazy" decoding="async"
+               alt="The Wood world: a timber cube in a warm, lamp-lit workshop.">
+          <span class="n">World 02</span>
+          <h3>Wood — The Forgotten Workshop</h3>
+          <p>Warm timber and lamplight. A puzzle box left on the bench, waiting to be picked back up.</p>
+        </article>
+
+        <article class="theme reveal" style="--g1:#3a2a6b; --g2:#131f45; --d:140ms">
+          <img src="assets/images/shots/theme-space.webp" width="720" height="1565" loading="lazy" decoding="async"
+               alt="The Space world: a glowing cube drifting past a purple planet, cyan rings below.">
+          <span class="n">World 03</span>
+          <h3>Space — The Lost Station</h3>
+          <p>Adrift past a dead planet. Cold light, slow debris, and a board that glows in the dark.</p>
+        </article>
+
+        <article class="theme reveal" style="--g1:#2f5c3a; --g2:#16301f">
+          <img src="assets/images/shots/theme-nature.webp" width="720" height="1565" loading="lazy" decoding="async"
+               alt="The Nature world: a mossy cube in a sunlit forest clearing with fireflies and blossom.">
+          <span class="n">World 04</span>
+          <h3>Nature — The Living Forest</h3>
+          <p>Moss, blossom and fireflies in a sunlit clearing. The quietest board, and the one that grows back.</p>
+        </article>
+
+        <article class="theme reveal" style="--g1:#77839a; --g2:#333c4d; --d:70ms">
+          <img src="assets/images/shots/theme-minimal.webp" width="720" height="1565" loading="lazy" decoding="async"
+               alt="The Minimal world: a white cube on a plain bright background with no scenery.">
+          <span class="n">World 05</span>
+          <h3>Minimal — The White Dimension</h3>
+          <p>Everything stripped away. No scenery, no colour, no excuses — only the problem in front of you.</p>
+        </article>
+
+        <article class="theme reveal" style="--g1:#5a3326; --g2:#272d38; --d:140ms">
+          <img src="assets/images/shots/theme-iron.webp" width="720" height="1565" loading="lazy" decoding="async"
+               alt="The Iron world: a steel cube suspended over a glowing furnace, gears turning behind it.">
+          <span class="n">World 06</span>
+          <h3>Iron — The Last Foundry</h3>
+          <p>Steel over a furnace, gears still turning. Dark, heavy, and built for the biggest cubes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 5. challenge progression ---------- -->
+  <section id="sizes" aria-labelledby="sizes-title">
+    <div class="wrap">
+      <div class="center reveal">
+        <h2 id="sizes-title">START SMALL.<br>THINK BIG.</h2>
+        <p class="lede">Four cube sizes. Every step up adds a layer in all three directions at once, so the board
+          does not just get wider — it gets deeper, and far more of it ends up hidden inside.</p>
+      </div>
+
+      <div class="dims">
+        <article class="dim reveal" style="--n:3">
+          <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="size">3×3×3</span>
+          <p class="meta">27 cells, <b>1</b> hidden inside</p>
+        </article>
+
+        <article class="dim reveal" style="--n:4; --d:70ms">
+          <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="size">4×4×4</span>
+          <p class="meta">64 cells, <b>8</b> hidden inside</p>
+        </article>
+
+        <article class="dim reveal" style="--n:5; --d:140ms">
+          <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="size">5×5×5</span>
+          <p class="meta">125 cells, <b>27</b> hidden inside</p>
+        </article>
+
+        <article class="dim reveal" style="--n:6; --d:210ms">
+          <div class="glyph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="size">6×6×6</span>
+          <p class="meta">216 cells, <b>64</b> hidden inside</p>
+        </article>
+      </div>
+
+      <div class="split" style="margin-top: var(--s5)">
+        <div class="reveal">
+          <h3>Bigger cubes are a different problem, not a longer one</h3>
+          <p class="lede">On a 3×3×3 a single cell is buried out of sight. On a 6×6×6 there are sixty-four of them,
+            stacked four deep. The logic never changes — but holding the whole shape in your head does.</p>
+        </div>
+        <div class="reveal" style="--d:90ms">
+          <div class="phone">
+            <img src="assets/images/shots/play-midsolve.webp" width="760" height="1652" loading="lazy" decoding="async"
+                 alt="A cube part-way through a solve, with flags placed and a block of numbered cells open.">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 6. download ---------- -->
+  <section id="download" aria-labelledby="download-title">
+    <div class="wrap">
+      <div class="cta reveal">
+        <h2 id="download-title">READY TO THINK IN 3D?</h2>
+        <p class="lede">Discover Minesweeper from a completely new perspective.</p>
+
+        <div class="actions">
+          <a class="btn btn-primary btn-store" data-appstore href="#" hidden>
+            <svg class="glyph-apple" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            Download on the App Store
+          </a>
+          <span class="btn btn-store btn-soon" data-appstore-soon>Coming soon to the App Store</span>
+
+          <a class="btn btn-ghost" href="support/">Get support</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="copy">© <span data-year>2026</span> CubeSweeper</p>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="./">Home</a></li>
+        <li><a href="support/">Support</a></li>
+        <li><a href="privacy/">Privacy Policy</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,735 @@
+/* Minesweeper: 3D Puzzle — support site.
+   One stylesheet, no framework, no build step. Mobile first: everything below is the phone layout, and the two
+   media queries at the end widen it. */
+
+:root {
+  --bg: #101d30;
+  --bg-2: #172b46;
+  --cyan: #00d9ff;
+  --white: #f4f8ff;
+  --orange: #ff784a;
+
+  /* Dimmed text, derived from --white so there is one source for the ink colour. */
+  --muted: #a7b6cc;
+  --line: rgba(244, 248, 255, 0.12);
+  --card: rgba(23, 43, 70, 0.72);
+
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow: 0 18px 44px rgba(4, 10, 20, 0.45);
+  --wrap: 1080px;
+
+  /* A single step scale, so spacing never gets invented per-component. */
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 40px;
+  --s5: 64px;
+  --s6: 96px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font-family: "Nunito", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* The glow sits behind everything and never scrolls away, the same cyan bloom the app icon uses. */
+  background-image:
+    radial-gradient(900px 620px at 50% -8%, rgba(0, 217, 255, 0.16), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, #0c1726 100%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3 { line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 var(--s2); }
+h1 { font-size: clamp(2rem, 7vw, 3.1rem); font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 4.6vw, 2.1rem); font-weight: 800; }
+h3 { font-size: 1.12rem; font-weight: 700; }
+p { margin: 0 0 var(--s2); }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--cyan); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--white); }
+
+/* One visible focus ring everywhere, rather than per-component. Keyboard users get the same treatment on
+   links, buttons and the FAQ rows. */
+:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.wrap { width: min(100% - 2 * var(--s3), var(--wrap)); margin-inline: auto; }
+
+/* Lets a keyboard user jump past the nav; invisible until it has focus. */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: var(--s2);
+  padding: 10px 18px;
+  background: var(--cyan);
+  color: #06121f;
+  border-radius: 10px;
+  font-weight: 800;
+  z-index: 10;
+}
+.skip:focus { left: var(--s3); }
+
+/* ---------- header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(16, 29, 48, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  min-height: 64px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.brand .mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(145deg, var(--cyan), #0b7fa8);
+  box-shadow: 0 0 0 1px rgba(0, 217, 255, 0.35), 0 6px 16px rgba(0, 217, 255, 0.22);
+  flex: 0 0 auto;
+}
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.nav-toggle:hover { border-color: rgba(0, 217, 255, 0.5); }
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 700;
+}
+.nav a:hover { background: rgba(0, 217, 255, 0.1); color: var(--cyan); }
+.nav a[aria-current="page"] { color: var(--cyan); background: rgba(0, 217, 255, 0.12); }
+
+/* Collapsed on phones; the button toggles [hidden]. Above 760px the query below shows it unconditionally. */
+.nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding: var(--s2) var(--s3) var(--s3);
+  background: rgba(16, 29, 48, 0.98);
+  border-bottom: 1px solid var(--line);
+}
+.nav[hidden] { display: none; }
+
+/* ---------- sections ---------- */
+
+main { display: block; }
+section { padding-block: var(--s5); }
+section + section { padding-top: 0; }
+
+.lede { color: var(--muted); font-size: 1.06rem; max-width: 62ch; }
+
+.hero { padding-top: var(--s5); padding-bottom: var(--s4); }
+.hero .eyebrow,
+.lp-hero .eyebrow {
+  display: inline-block;
+  margin-bottom: var(--s2);
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  border-radius: 999px;
+  background: rgba(0, 217, 255, 0.08);
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero h1 .accent { color: var(--cyan); }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s3); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease, border-color 0.16s ease;
+}
+.btn-primary {
+  background: var(--cyan);
+  color: #06121f;
+  box-shadow: 0 10px 26px rgba(0, 217, 255, 0.28);
+}
+.btn-primary:hover { background: #5ce6ff; color: #06121f; transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--white); border-color: var(--line); }
+.btn-ghost:hover { border-color: rgba(0, 217, 255, 0.55); color: var(--cyan); transform: translateY(-2px); }
+
+/* ---------- cards ---------- */
+
+.grid { display: grid; gap: var(--s2); margin-top: var(--s3); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--s3);
+  box-shadow: var(--shadow);
+}
+.card h3 { margin-bottom: 6px; }
+.card p { color: var(--muted); margin: 0; }
+
+.step { display: flex; gap: var(--s2); align-items: flex-start; }
+.step .num {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: rgba(0, 217, 255, 0.14);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.note {
+  margin-top: var(--s3);
+  padding: var(--s3);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 120, 74, 0.35);
+  background: rgba(255, 120, 74, 0.09);
+}
+.note strong { color: var(--orange); }
+
+/* ---------- FAQ ----------
+   Native <details>, so it is keyboard operable and screen-reader correct without any script. */
+
+.faq { display: grid; gap: 12px; margin-top: var(--s3); }
+
+.faq details {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.faq summary {
+  cursor: pointer;
+  padding: 18px var(--s3);
+  font-weight: 700;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--cyan); }
+.faq summary::after {
+  content: "+";
+  color: var(--cyan);
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 700;
+  flex: 0 0 auto;
+  transition: transform 0.18s ease;
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .answer { padding: 0 var(--s3) 18px; color: var(--muted); }
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  margin-top: var(--s6);
+  border-top: 1px solid var(--line);
+  background: rgba(12, 23, 38, 0.6);
+  padding-block: var(--s4);
+}
+.site-footer .wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  align-items: flex-start;
+}
+.site-footer nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+.site-footer a { color: var(--muted); text-decoration: none; font-weight: 700; }
+.site-footer a:hover { color: var(--cyan); }
+.site-footer .copy { color: var(--muted); font-size: 0.94rem; margin: 0; }
+
+/* ---------- prose (privacy) ---------- */
+
+.prose { max-width: 72ch; }
+.prose h2 { margin-top: var(--s4); }
+.prose ul { color: var(--muted); padding-left: 1.25em; }
+.prose li { margin-bottom: 8px; }
+.prose .updated { color: var(--muted); font-size: 0.94rem; }
+
+/* ---------- wider screens ---------- */
+
+@media (min-width: 760px) {
+  body { font-size: 18px; }
+
+  .nav-toggle { display: none; }
+  .nav {
+    position: static;
+    padding: 0;
+    background: transparent;
+    border: 0;
+  }
+  /* The button hides the list on phones; past this width it is always a row, [hidden] or not. */
+  .nav[hidden] { display: block; }
+  .nav ul { flex-direction: row; gap: 4px; }
+
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+  .site-footer .wrap { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+@media (min-width: 1040px) {
+  section { padding-block: var(--s6); }
+  section + section { padding-top: 0; }
+}
+
+/* ---------- review markers (privacy policy) ----------
+   Deliberately loud. Everything in this policy that has not been confirmed by the developer carries one of these,
+   so an unchecked assumption cannot be mistaken for a statement of fact by a reader or by App Review. */
+
+.review-banner {
+  margin-top: var(--s3);
+  padding: var(--s3);
+  border-radius: var(--radius);
+  border: 2px solid var(--orange);
+  background: rgba(255, 120, 74, 0.12);
+}
+.review-banner h2 {
+  font-size: 1.1rem;
+  color: var(--orange);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.review-banner p { color: var(--white); margin-bottom: 10px; }
+.review-banner p:last-child { margin-bottom: 0; }
+
+/* Inline, in the flow of a sentence, where one value is missing. */
+.todo {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 6px;
+  background: var(--orange);
+  color: #1a0b05;
+  font-weight: 800;
+  font-size: 0.86em;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* A whole paragraph or claim that needs checking before the page goes live. */
+.verify {
+  border-left: 3px solid var(--orange);
+  padding: 12px 0 12px var(--s2);
+  margin: var(--s2) 0;
+  background: rgba(255, 120, 74, 0.07);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.verify p { color: var(--muted); margin: 0; }
+.verify p strong { color: var(--orange); }
+
+/* The configuration table and the pre-publication checklist. */
+.config {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--s2);
+  font-size: 0.96rem;
+}
+.config th, .config td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.config th { color: var(--cyan); font-weight: 800; }
+.config td { color: var(--muted); }
+.config td:first-child { color: var(--white); font-weight: 700; white-space: nowrap; }
+
+/* The table is wider than a phone; let it scroll rather than squashing the columns. */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+.checklist { list-style: none; padding: 0; margin-top: var(--s2); }
+.checklist li {
+  position: relative;
+  padding-left: 34px;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--orange);
+  border-radius: 5px;
+}
+.checklist li strong { color: var(--white); }
+
+/* ---------- landing page ----------
+   Only index.html uses the rules below; they are additive and prefixed, so support and privacy are untouched.
+   Every animation moves transform or opacity only, which the compositor handles without relayout, and the
+   prefers-reduced-motion block at the top of this file already flattens all of them to 0.01ms. */
+
+/* .btn sets display:inline-flex, which beats the user agent's [hidden] rule, so the App Store link would
+   still show while hidden. Scoped to .btn on purpose: a blanket [hidden] rule would also defeat
+   .nav[hidden] { display: block }, which is what keeps the desktop nav visible. */
+.btn[hidden] { display: none !important; }
+
+.lp-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: var(--s5);
+  padding-bottom: var(--s5);
+}
+
+/* Floating background geometry: decoration, marked aria-hidden and inert to the pointer. */
+.orbs { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+
+.orb {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.42;
+  will-change: transform;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.orb-1 { top: -18%; left: -14%; background: radial-gradient(circle, rgba(0, 217, 255, 0.5), transparent 68%); }
+.orb-2 { top: 26%; right: -22%; background: radial-gradient(circle, rgba(255, 120, 74, 0.32), transparent 68%); animation-duration: 34s; animation-direction: alternate-reverse; }
+.orb-3 { bottom: -26%; left: 22%; background: radial-gradient(circle, rgba(94, 128, 255, 0.34), transparent 68%); animation-duration: 30s; }
+
+/* Wireframe cubes, drawn as rotating squares. Cheap, and they echo the board without loading an asset. */
+.shape {
+  position: absolute;
+  border: 1.5px solid rgba(0, 217, 255, 0.16);
+  border-radius: 8px;
+  will-change: transform;
+  animation: spin-slow 38s linear infinite;
+}
+.shape-1 { width: 74px; height: 74px; top: 14%; right: 12%; }
+.shape-2 { width: 46px; height: 46px; top: 62%; left: 7%; animation-duration: 28s; animation-direction: reverse; }
+.shape-3 { width: 112px; height: 112px; bottom: 8%; right: 24%; opacity: 0.6; animation-duration: 52s; }
+
+.lp-hero .wrap { position: relative; z-index: 1; }
+
+.lp-hero h1 {
+  font-size: clamp(2.3rem, 8.2vw, 4.3rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin-bottom: var(--s3);
+}
+
+/* The moving sheen sits on the second line only, so the headline still reads as flat type. */
+.sheen {
+  background: linear-gradient(100deg, var(--cyan) 0%, #8ef1ff 28%, var(--cyan) 52%, #5ce6ff 76%, var(--cyan) 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen-move 9s ease-in-out infinite;
+}
+
+.lp-hero .lede { font-size: 1.14rem; margin-inline: auto; }
+
+/* ---------- phone frame ---------- */
+
+.phone {
+  position: relative;
+  width: min(100%, 300px);
+  margin: var(--s5) auto 0;
+  padding: 10px;
+  border-radius: 42px;
+  background: linear-gradient(160deg, rgba(244, 248, 255, 0.22), rgba(244, 248, 255, 0.04) 42%, rgba(0, 217, 255, 0.16));
+  box-shadow: 0 34px 80px rgba(4, 10, 20, 0.6), 0 0 0 1px rgba(244, 248, 255, 0.08);
+}
+.phone::after {
+  /* Glass highlight across the top third. */
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 33px;
+  background: linear-gradient(180deg, rgba(244, 248, 255, 0.14), transparent 38%);
+  pointer-events: none;
+}
+.phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 33px;
+  background: var(--bg-2);
+}
+.phone-lg { width: min(100%, 340px); }
+
+/* A plain shadowed screenshot, no bezel, for the layer section. */
+.shot {
+  display: block;
+  width: min(100%, 320px);
+  height: auto;
+  margin-inline: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- split rows ---------- */
+
+.split { display: grid; gap: var(--s4); align-items: center; margin-top: var(--s3); }
+
+/* ---------- numbered steps ---------- */
+
+.steps { display: grid; gap: var(--s2); margin-top: var(--s3); counter-reset: step; }
+
+.step-card {
+  display: flex;
+  gap: var(--s2);
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--s3);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.step-card:hover { transform: translateY(-3px); border-color: rgba(0, 217, 255, 0.4); }
+.step-card .num {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: rgba(0, 217, 255, 0.14);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 217, 255, 0.32);
+}
+.step-card h3 { margin-bottom: 4px; }
+.step-card p { color: var(--muted); margin: 0; }
+
+/* ---------- theme cards ---------- */
+
+.themes { display: grid; gap: var(--s3); margin-top: var(--s4); }
+
+.theme {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  padding: var(--s3);
+  background-image: linear-gradient(165deg, var(--g1), var(--g2));
+  box-shadow: var(--shadow);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.theme:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 217, 255, 0.42);
+  box-shadow: 0 26px 60px rgba(4, 10, 20, 0.6);
+}
+.theme img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  background: rgba(0, 0, 0, 0.2);
+  transition: transform 0.35s ease;
+}
+.theme:hover img { transform: scale(1.035); }
+.theme .n {
+  display: block;
+  margin-top: var(--s2);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.theme h3 { margin: 4px 0 6px; font-size: 1.22rem; }
+.theme p { color: rgba(244, 248, 255, 0.82); margin: 0; font-size: 0.97rem; }
+
+/* ---------- cube sizes ---------- */
+
+.dims { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s2); margin-top: var(--s4); }
+
+.dim {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--s3);
+  text-align: center;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.dim:hover { transform: translateY(-4px); border-color: rgba(0, 217, 255, 0.42); }
+
+/* The stack of squares above each size, scaled by --n so a 6-cube visibly outgrows a 3-cube. */
+.dim .glyph {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--s2);
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+  grid-template-rows: repeat(var(--n), 1fr);
+  gap: 2px;
+  transform: rotateX(52deg) rotateZ(45deg);
+  transform-style: preserve-3d;
+}
+.dim .glyph i {
+  display: block;
+  border-radius: 2px;
+  background: rgba(0, 217, 255, 0.5);
+  box-shadow: 0 0 0 1px rgba(0, 217, 255, 0.28);
+}
+.dim .glyph i:nth-child(even) { background: rgba(0, 217, 255, 0.22); }
+
+.dim .size { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; display: block; }
+.dim .meta { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.dim .meta b { color: var(--orange); font-weight: 800; }
+
+/* ---------- download ---------- */
+
+.cta {
+  text-align: center;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 217, 255, 0.26);
+  background:
+    radial-gradient(620px 300px at 50% 0%, rgba(0, 217, 255, 0.18), transparent 70%),
+    var(--card);
+  padding: var(--s5) var(--s3);
+  box-shadow: var(--shadow);
+}
+.cta .lede { margin-inline: auto; }
+.cta .actions { justify-content: center; }
+
+/* The App Store control. Until a real URL is configured this renders as a non-clickable "coming soon". */
+.btn-store { padding: 15px 26px; font-size: 1.02rem; }
+.btn-soon {
+  background: rgba(244, 248, 255, 0.07);
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  cursor: default;
+}
+.btn-soon:hover { transform: none; }
+.btn .glyph-apple { width: 19px; height: 19px; flex: 0 0 auto; fill: currentColor; }
+
+.center { text-align: center; }
+.center .lede { margin-inline: auto; }
+.center .actions { justify-content: center; }
+
+/* ---------- scroll reveal ----------
+   Gated behind .js-reveal, which main.js puts on <html>. Without script, or with reduced motion, nothing is
+   ever hidden — the class is simply never added. */
+
+.js-reveal .reveal { opacity: 0; transform: translateY(20px); }
+.js-reveal .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms),
+              transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) var(--d, 0ms);
+}
+
+/* ---------- keyframes ---------- */
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(4%, 6%, 0) scale(1.12); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sheen-move {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ---------- landing: wider screens ---------- */
+
+@media (min-width: 760px) {
+  .themes { grid-template-columns: repeat(2, 1fr); }
+  .dims { grid-template-columns: repeat(4, 1fr); }
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .split { grid-template-columns: 1fr 1fr; gap: var(--s5); }
+  .phone { width: min(100%, 320px); }
+  .shot { width: min(100%, 340px); }
+  .lp-hero { padding-top: var(--s6); }
+}
+
+@media (min-width: 1040px) {
+  .themes { grid-template-columns: repeat(3, 1fr); }
+  .steps { grid-template-columns: repeat(3, 1fr); }
+  .phone-lg { width: min(100%, 360px); }
+}
