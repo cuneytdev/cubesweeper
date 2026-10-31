@@ -6,15 +6,11 @@
   "use strict";
 
   /* ------------------------------------------------------------------
-   * THE ONE THING TO EDIT
-   *
-   * Replace the placeholder with the real address. It is substituted into every mailto: link and every piece of
-   * visible text that carries data-support-email, across all three pages.
-   *
-   * The HTML also contains the literal "SUPPORT_EMAIL" so the page still reads correctly without JavaScript. If
-   * you would rather not rely on script at all, find and replace that string in the three index.html files too.
+   * The support address. It is written into the HTML of all three pages as well, so the privacy policy and the
+   * support page stay readable and contactable with this file blocked — a legal page must not need script to
+   * tell someone how to reach us. Change it here *and* in the three index.html files if it ever moves.
    * ------------------------------------------------------------------ */
-  var SUPPORT_EMAIL = "SUPPORT_EMAIL";
+  var SUPPORT_EMAIL = "cuneytdalan17@gmail.com";
 
   /* And the App Store listing, once the app is live. Leave it exactly as it is until you have the real
    * URL: while it reads APP_STORE_URL every download control stays a non-clickable "Coming soon to the

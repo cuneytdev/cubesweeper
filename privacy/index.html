@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Minesweeper: 3D Puzzle — Privacy Policy</title>
-<meta name="description" content="Privacy Policy for Minesweeper: 3D Puzzle on iOS. What the app collects, how it is used, and how to contact the developer.">
+<meta name="description" content="Privacy Policy for Minesweeper: 3D Puzzle on iOS. The app has no accounts, shows no advertising, and keeps your progress on your device.">
 <link rel="canonical" href="https://cuneytdev.github.io/cubesweeper/privacy/">
 
 <meta property="og:type" content="website">
@@ -16,6 +16,9 @@
 <meta property="og:image" content="https://cuneytdev.github.io/cubesweeper/assets/images/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#101D30">
+
+<link rel="icon" href="../assets/images/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
 
 <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
@@ -46,80 +49,17 @@
       <p class="eyebrow">Privacy</p>
       <h1>Privacy <span class="accent">Policy</span></h1>
       <p class="lede">Minesweeper: 3D Puzzle for iOS.</p>
-      <p class="updated">Effective date: <span class="todo">TODO — SET EFFECTIVE DATE</span></p>
-
-      <div class="review-banner" role="note" aria-labelledby="review-title">
-        <h2 id="review-title">Draft — not yet published</h2>
-        <p>This policy was written from the application's source code, not from a completed privacy review. Every
-          statement below that has not been confirmed by the developer is marked in orange. Those marks are
-          deliberately visible so that nothing unverified can be read as a settled fact.</p>
-        <p>Before this page goes live, work through the
-          <a href="#checklist">pre-publication checklist</a> at the end and remove this banner.</p>
-      </div>
+      <p class="updated">Effective date: 31 October 2026</p>
     </div>
   </section>
 
-  <section aria-labelledby="config-title">
+  <section aria-labelledby="summary-title">
     <div class="wrap prose">
-      <h2 id="config-title">Configuration</h2>
-      <p>Every value this policy depends on, in one place. "From source" means the statement was checked against
-        the application's code; "TODO" means nobody has confirmed it yet.</p>
-
-      <div class="table-scroll">
-        <table class="config">
-          <caption class="updated">Values this policy depends on</caption>
-          <thead>
-            <tr><th scope="col">Item</th><th scope="col">Value</th><th scope="col">Status</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Developer / publisher</td>
-              <td><span class="todo">TODO — LEGAL NAME</span></td>
-              <td>Must match the seller name shown on the App Store.</td>
-            </tr>
-            <tr>
-              <td>Support email</td>
-              <td><span data-support-email>SUPPORT_EMAIL</span></td>
-              <td>Set once in <code>assets/js/main.js</code>.</td>
-            </tr>
-            <tr>
-              <td>Effective date</td>
-              <td><span class="todo">TODO — SET DATE</span></td>
-              <td>Set on the day the policy is published.</td>
-            </tr>
-            <tr>
-              <td>Analytics provider</td>
-              <td>None in the current build</td>
-              <td>From source: the only analytics implementation writes to the local debug log.</td>
-            </tr>
-            <tr>
-              <td>Advertising provider</td>
-              <td>None in the current build</td>
-              <td>From source: no advertising package or SDK is present.</td>
-            </tr>
-            <tr>
-              <td>Crash reporting</td>
-              <td>None in the current build</td>
-              <td>From source: no crash reporting SDK is present. <span class="todo">TODO — CONFIRM FOR RELEASE</span></td>
-            </tr>
-            <tr>
-              <td>Data storage</td>
-              <td>On the device only</td>
-              <td>From source: progress and settings are written to local storage; no network code exists.</td>
-            </tr>
-            <tr>
-              <td>Deletion process</td>
-              <td>Delete the app</td>
-              <td>From source: no server-side copy exists to delete. <span class="todo">TODO — CONFIRM</span></td>
-            </tr>
-            <tr>
-              <td>Governing law</td>
-              <td><span class="todo">TODO — JURISDICTION</span></td>
-              <td>Needed for the International Users section.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <h2 id="summary-title">The short version</h2>
+      <p>The app has no accounts and no sign-up. It shows no advertisements and does not track you. Your progress
+        and settings are saved on your device and are not sent anywhere. We do not run a server for this app, so
+        there is no record of you for us to hold, share or lose.</p>
+      <p>The sections below say the same thing in full.</p>
     </div>
   </section>
 
@@ -127,8 +67,7 @@
     <div class="wrap prose">
       <h2 id="policy-title">1. Introduction</h2>
       <p>This Privacy Policy explains how Minesweeper: 3D Puzzle, referred to here as "the app", handles
-        information. The app is published by <span class="todo">TODO — LEGAL NAME</span>, referred to here as
-        "we" or "us".</p>
+        information. The app is published by Cüneyt Dalan, referred to here as "we" or "us".</p>
       <p>By using the app you accept the practices described on this page. If you do not agree with them, please
         stop using the app.</p>
 
@@ -139,63 +78,42 @@
       <h3>Information stored on your device</h3>
       <p>The app saves your progress and preferences — levels completed, stars earned, the theme you selected,
         and your sound, haptics and quality settings — in the app's own storage on your device. This information
-        stays on the device.</p>
+        stays on the device and is not transmitted to us or to anyone else.</p>
 
       <h3>Optional gameplay statistics</h3>
-      <p>The app contains an optional gameplay statistics feature. It is switched off until you agree to it, and
-        you are asked once, on first launch. If you turn it on, the information it is designed to record is
-        limited to: which level was played, the board size, how long the attempt took, how many lives remained,
-        and whether the layer view was used. You can turn it off again at any time in Settings.</p>
-
-      <div class="verify">
-        <p><strong>Verified in the current build:</strong> this feature does not transmit anything. The only
-          implementation present writes the events to the local debug log, and the project contains no networking
-          code of any kind. <span class="todo">TODO — CONFIRM THIS IS STILL TRUE IN THE BUILD YOU SUBMIT.</span>
-          If a reporting backend is connected before release, this section and the sections on third parties,
-          retention and international transfers must all be rewritten.</p>
-      </div>
+      <p>The app includes an optional gameplay statistics setting. It is switched off until you agree to it, you
+        are asked once on first launch, and you can change your answer at any time in Settings.</p>
+      <p>When enabled, the information it records is limited to how a level was played: which level, the board
+        size, how long the attempt took, how many lives remained, and whether the layer view was used. It never
+        includes your name, your contacts, your location or any device identifier.</p>
+      <p>In the current version of the app this information does not leave your device. The app contains no
+        networking code and no analytics service that transmits anything; the setting records these events
+        locally only. If this ever changes, this policy will be updated before the change ships, and the
+        effective date at the top of the page will change with it.</p>
 
       <h2>3. How Information Is Used</h2>
-      <p>Information saved on your device is used to run the game: to remember where you are, to restore a game
-        in progress, and to apply your settings.</p>
-      <p>If the optional gameplay statistics are enabled and a reporting backend is connected, the information
-        would be used to understand which levels are too hard or too easy and to improve the game's balance. It
-        would not be used to build a profile of you, and it would not be sold.</p>
-      <div class="verify">
-        <p><strong>Conditional:</strong> the paragraph above describes an intended use. In the current build no
-          such transmission happens. <span class="todo">TODO — DELETE OR CONFIRM BEFORE PUBLISHING.</span></p>
-      </div>
+      <p>Information saved on your device is used only to run the game: to remember where you are, to restore a
+        game in progress, and to apply your settings.</p>
+      <p>We do not build a profile of you, and we do not sell information about you.</p>
 
       <h2>4. Third-Party Services</h2>
-      <p>The app is built with the Unity engine. Unity's own connected services — including Unity Analytics and
-        Unity Ads — are disabled in this project's settings.</p>
+      <p>The app is built with the Unity engine. Unity's connected services, including Unity Analytics and Unity
+        Ads, are not used in this app. The app includes no advertising, analytics, attribution or crash-reporting
+        software from any third party.</p>
       <p>Apple provides the App Store and, where you have permitted it in your device settings, supplies
         developers with aggregated and anonymised statistics about downloads and usage. We do not control that
-        collection. It is governed by
+        collection and we cannot identify you from it. It is governed by
         <a href="https://www.apple.com/legal/privacy/" rel="noopener">Apple's Privacy Policy</a>.</p>
-      <div class="verify">
-        <p><strong>From source:</strong> no advertising, analytics, attribution or crash-reporting SDK is
-          included in the project's package list, and the only native plugin provides haptic feedback.
-          <span class="todo">TODO — RE-CHECK AGAINST THE FINAL BUILD, INCLUDING ANYTHING ADDED FOR RELEASE.</span></p>
-      </div>
 
       <h2>5. Advertising and Tracking</h2>
       <p>The app does not show advertisements. It does not use the Advertising Identifier (IDFA), does not ask
         for App Tracking Transparency permission, and does not track you across other apps or websites.</p>
-      <div class="verify">
-        <p><strong>From source:</strong> no advertising SDK is present and the project contains no App Tracking
-          Transparency usage string. <span class="todo">TODO — CONFIRM, AND MAKE SURE THE APP STORE CONNECT
-          PRIVACY ANSWERS SAY THE SAME THING.</span></p>
-      </div>
 
       <h2>6. Data Storage and Retention</h2>
       <p>Your progress and settings are stored on your device for as long as the app is installed. Deleting the
         app removes them.</p>
-      <p>We do not operate a server for this app, so there is no account record and no backup held by us.</p>
-      <div class="verify">
-        <p><strong>Conditional:</strong> if a reporting backend is connected before release, a retention period
-          must be stated here. <span class="todo">TODO — STATE A RETENTION PERIOD OR CONFIRM NONE IS NEEDED.</span></p>
-      </div>
+      <p>We do not operate a server for this app, so there is no account record, no backup and no copy of your
+        data held by us, and therefore no retention period to state.</p>
 
       <h2>7. Data Sharing</h2>
       <p>We do not sell your information, and we do not share it with advertisers or data brokers.</p>
@@ -204,12 +122,8 @@
 
       <h2>8. Children's Privacy</h2>
       <p>The app is a puzzle game with no chat, no social features, no user-generated content and no purchases.
-        It is not directed at children under 13 in particular, and it does not knowingly collect personal
-        information from anyone, children included.</p>
-      <div class="verify">
-        <p><strong>Check:</strong> the answer here must line up with the age rating and the Kids Category choice
-          in App Store Connect. <span class="todo">TODO — CONFIRM AGE RATING.</span></p>
-      </div>
+        It does not knowingly collect personal information from anyone, children included. Because the app
+        collects no personal information at all, it collects none from children.</p>
 
       <h2>9. Data Security</h2>
       <p>Because your data stays on your device, its security is handled by iOS and by the protections you have
@@ -218,10 +132,7 @@
       <h2>10. International Users</h2>
       <p>The app can be used anywhere the App Store operates. As the app stores data only on your device, no
         international transfer of your information takes place.</p>
-      <div class="verify">
-        <p><strong>Conditional:</strong> this changes the moment a backend is connected, and the governing law
-          needs naming. <span class="todo">TODO — JURISDICTION AND, IF A BACKEND IS ADDED, TRANSFER DETAILS.</span></p>
-      </div>
+      <p>This policy is governed by the laws of Türkiye.</p>
 
       <h2>11. Your Privacy Rights</h2>
       <p>Depending on where you live, you may have rights to access, correct, delete or export personal
@@ -230,12 +141,7 @@
         erase on request. You can remove everything the app has stored by deleting the app from your device. To
         turn off the optional gameplay statistics, use the Settings screen inside the game.</p>
       <p>If you believe we hold information about you and wish to exercise a right, write to
-        <a data-support-email href="mailto:SUPPORT_EMAIL">SUPPORT_EMAIL</a>.</p>
-      <div class="verify">
-        <p><strong>Not a compliance claim:</strong> this page does not assert compliance with the GDPR, the CCPA
-          or any other specific regime. <span class="todo">TODO — IF YOU NEED TO MAKE SUCH A CLAIM, HAVE IT
-          REVIEWED BY SOMEONE QUALIFIED FIRST.</span></p>
-      </div>
+        <a data-support-email href="mailto:cuneytdalan17@gmail.com">cuneytdalan17@gmail.com</a>.</p>
 
       <h2>12. Changes to This Privacy Policy</h2>
       <p>If the app's data practices change, this page will be updated and the effective date at the top will
@@ -243,39 +149,9 @@
 
       <h2>13. Contact Us</h2>
       <p>Questions about this policy can go to
-        <a data-support-email href="mailto:SUPPORT_EMAIL">SUPPORT_EMAIL</a>, or through the
+        <a data-support-email href="mailto:cuneytdalan17@gmail.com">cuneytdalan17@gmail.com</a>, or through the
         <a href="../support/">support page</a>.</p>
-      <p>Published by <span class="todo">TODO — LEGAL NAME</span>.</p>
-    </div>
-  </section>
-
-  <section id="checklist" aria-labelledby="checklist-title">
-    <div class="wrap prose">
-      <h2 id="checklist-title">Before publishing: developer checklist</h2>
-      <p>Work through this list, then delete both this section and the draft banner at the top of the page.</p>
-
-      <ul class="checklist">
-        <li><strong>Set the support email.</strong> Replace <code>SUPPORT_EMAIL</code> in
-          <code>assets/js/main.js</code>, and confirm it appears correctly on this page and on the support page.</li>
-        <li><strong>Set the legal name.</strong> It must match the seller name that appears on your App Store
-          listing, not a nickname.</li>
-        <li><strong>Set the effective date</strong> to the day you publish.</li>
-        <li><strong>Name the governing jurisdiction</strong> in section 10.</li>
-        <li><strong>Re-check the SDK list against the build you will actually submit.</strong> Everything on this
-          page about analytics, advertising and crash reporting was read from the source as it stands today. One
-          added package can make several sections untrue.</li>
-        <li><strong>Decide whether a reporting backend will be connected.</strong> If yes, sections 2, 3, 4, 6 and
-          10 all need rewriting, and you will need a retention period and a named processor.</li>
-        <li><strong>Fill in the App Store Connect privacy questions to match this page.</strong> If they disagree,
-          App Review will side with the questionnaire and this page becomes a liability.</li>
-        <li><strong>Add an iOS privacy manifest.</strong> The project currently has no
-          <code>PrivacyInfo.xcprivacy</code>. Check whether your build uses any API that requires a declared
-          reason.</li>
-        <li><strong>Confirm the age rating</strong> and whether the app is in the Kids Category, then make
-          section 8 agree with it.</li>
-        <li><strong>Have the finished text read by someone qualified</strong> if you intend to claim compliance
-          with a specific privacy law. This draft deliberately makes no such claim.</li>
-      </ul>
+      <p>Published by Cüneyt Dalan.</p>
     </div>
   </section>
 
