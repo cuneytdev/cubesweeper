@@ -10,7 +10,7 @@
    * support page stay readable and contactable with this file blocked — a legal page must not need script to
    * tell someone how to reach us. Change it here *and* in the three index.html files if it ever moves.
    * ------------------------------------------------------------------ */
-  var SUPPORT_EMAIL = "cuneytdalan17@gmail.com";
+  var SUPPORT_EMAIL = "minesweeper3dgame@gmail.com";
 
   /* And the App Store listing, once the app is live. Leave it exactly as it is until you have the real
    * URL: while it reads APP_STORE_URL every download control stays a non-clickable "Coming soon to the
