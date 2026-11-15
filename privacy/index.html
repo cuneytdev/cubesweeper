@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Minesweeper: 3D Puzzle — Privacy Policy</title>
-<meta name="description" content="Privacy Policy for Minesweeper: 3D Puzzle on iOS. The app has no accounts, shows no advertising, and keeps your progress on your device.">
+<meta name="description" content="Privacy Policy for Minesweeper: 3D Puzzle on iOS. The app has no accounts and shows no advertising. Your progress stays on your device; gameplay statistics and crash reports are sent only if you agree.">
 <link rel="canonical" href="https://cuneytdev.github.io/cubesweeper/privacy/">
 
 <meta property="og:type" content="website">
@@ -49,16 +49,18 @@
       <p class="eyebrow">Privacy</p>
       <h1>Privacy <span class="accent">Policy</span></h1>
       <p class="lede">Minesweeper: 3D Puzzle for iOS.</p>
-      <p class="updated">Effective date: 31 October 2026</p>
+      <p class="updated">Effective date: 15 November 2026</p>
     </div>
   </section>
 
   <section aria-labelledby="summary-title">
     <div class="wrap prose">
       <h2 id="summary-title">The short version</h2>
-      <p>The app has no accounts and no sign-up. It shows no advertisements and does not track you. Your progress
-        and settings are saved on your device and are not sent anywhere. We do not run a server for this app, so
-        there is no record of you for us to hold, share or lose.</p>
+      <p>The app has no accounts and no sign-up. It shows no advertisements and does not track you across other
+        apps or websites. Your progress and settings are saved on your device.</p>
+      <p>The app can also send anonymous gameplay statistics and crash reports to Google Firebase — but only if
+        you agree. It is switched off in the build, you are asked once on first launch, and you can change your
+        answer at any time in Settings. Say no and the app sends nothing at all.</p>
       <p>The sections below say the same thing in full.</p>
     </div>
   </section>
@@ -86,10 +88,14 @@
       <p>When enabled, the information it records is limited to how a level was played: which level, the board
         size, how long the attempt took, how many lives remained, and whether the layer view was used. It never
         includes your name, your contacts, your location or any device identifier.</p>
-      <p>In the current version of the app this information does not leave your device. The app contains no
-        networking code and no analytics service that transmits anything; the setting records these events
-        locally only. If this ever changes, this policy will be updated before the change ships, and the
-        effective date at the top of the page will change with it.</p>
+      <p>When enabled, these events are sent to Google Firebase Analytics, and reports about crashes are sent to
+        Firebase Crashlytics. Both ship switched off and are only ever turned on by your answer to that
+        question; turning the setting off again stops them.</p>
+      <p>Firebase records technical information of its own alongside each event: a random identifier generated for
+        this installation of the app, the app version, the device model, the operating system version, and the
+        country and language the device is set to. A crash report describes the state of the app when it stopped,
+        with the same installation identifier. None of it includes your name, your contacts, your location or the
+        Advertising Identifier, and the identifier is replaced if you delete and reinstall the app.</p>
 
       <h2>3. How Information Is Used</h2>
       <p>Information saved on your device is used only to run the game: to remember where you are, to restore a
@@ -98,8 +104,14 @@
 
       <h2>4. Third-Party Services</h2>
       <p>The app is built with the Unity engine. Unity's connected services, including Unity Analytics and Unity
-        Ads, are not used in this app. The app includes no advertising, analytics, attribution or crash-reporting
-        software from any third party.</p>
+        Ads, are not used in this app. The app includes no advertising or attribution software.</p>
+      <p>The app uses two Google Firebase services, both behind the consent question described in section 2 and
+        both switched off until you agree to it: <strong>Firebase Analytics</strong> for the gameplay statistics
+        and <strong>Firebase Crashlytics</strong> for crash reports. Google processes this information for us as
+        our service provider. It is governed by
+        <a href="https://policies.google.com/privacy" rel="noopener">Google's Privacy Policy</a> and by the
+        <a href="https://firebase.google.com/support/privacy" rel="noopener">Firebase privacy and security
+        terms</a>.</p>
       <p>Apple provides the App Store and, where you have permitted it in your device settings, supplies
         developers with aggregated and anonymised statistics about downloads and usage. We do not control that
         collection and we cannot identify you from it. It is governed by
@@ -112,34 +124,46 @@
       <h2>6. Data Storage and Retention</h2>
       <p>Your progress and settings are stored on your device for as long as the app is installed. Deleting the
         app removes them.</p>
-      <p>We do not operate a server for this app, so there is no account record, no backup and no copy of your
-        data held by us, and therefore no retention period to state.</p>
+      <p>We operate no server of our own. There is no account, no backup and no copy of your saved game held by
+        us.</p>
+      <p>If you allowed the optional statistics, the events and crash reports are held by Google Firebase for the
+        retention period set on our Firebase project, and are deleted when it expires. Declining, or turning the
+        setting off later, means there is nothing to retain.</p>
 
       <h2>7. Data Sharing</h2>
       <p>We do not sell your information, and we do not share it with advertisers or data brokers.</p>
+      <p>The only third party that receives anything is Google, as the provider of Firebase, and only for the
+        statistics and crash reports described in sections 2 and 4.</p>
       <p>We may disclose information if we are required to by law, or to protect our rights or the safety of
-        others — but in practice we hold no information about you that could be disclosed.</p>
+        others.</p>
 
       <h2>8. Children's Privacy</h2>
       <p>The app is a puzzle game with no chat, no social features, no user-generated content and no purchases.
-        It does not knowingly collect personal information from anyone, children included. Because the app
-        collects no personal information at all, it collects none from children.</p>
+        It does not knowingly collect personal information from anyone, children included. The optional
+        statistics are tied to a random installation identifier rather than to a person, and they are not
+        collected at all unless someone agrees to the question on first launch.</p>
 
       <h2>9. Data Security</h2>
-      <p>Because your data stays on your device, its security is handled by iOS and by the protections you have
-        enabled, such as a passcode or Face ID. No system can be guaranteed to be completely secure.</p>
+      <p>Your saved game stays on your device, where its security is handled by iOS and by the protections you
+        have enabled, such as a passcode or Face ID. The optional statistics travel over an encrypted connection
+        and are held under Google's security measures for Firebase. No system can be guaranteed to be completely
+        secure.</p>
 
       <h2>10. International Users</h2>
-      <p>The app can be used anywhere the App Store operates. As the app stores data only on your device, no
-        international transfer of your information takes place.</p>
+      <p>The app can be used anywhere the App Store operates. Your saved game stays on your device. If you
+        allowed the optional statistics, Google processes them on Firebase infrastructure that may be outside
+        your country, including in the United States, under Google's own transfer safeguards.</p>
       <p>This policy is governed by the laws of Türkiye.</p>
 
       <h2>11. Your Privacy Rights</h2>
       <p>Depending on where you live, you may have rights to access, correct, delete or export personal
         information held about you, and to object to its processing.</p>
-      <p>Because we hold no personal information about you on any server, there is nothing for us to retrieve or
-        erase on request. You can remove everything the app has stored by deleting the app from your device. To
-        turn off the optional gameplay statistics, use the Settings screen inside the game.</p>
+      <p>You can remove everything the app has stored by deleting the app from your device, and you can turn the
+        optional statistics off at any time from the Settings screen inside the game, which stops any further
+        collection.</p>
+      <p>The statistics are tied to a random installation identifier and not to your name, so we have no way to
+        look you up. If you want the data from your installation erased, write to us from the address below and
+        we will remove what can be identified from the information you give us.</p>
       <p>If you believe we hold information about you and wish to exercise a right, write to
         <a data-support-email href="mailto:minesweeper3dgame@gmail.com">minesweeper3dgame@gmail.com</a>.</p>
 
